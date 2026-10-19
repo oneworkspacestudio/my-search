@@ -33,7 +33,7 @@ Page Search
       Text $item.name
       Badge tone=$item.tone $item.status
       If condition=$item.connect
-        Link href=$item.path external=true "Open app to connect"
+        Link href=$item.connectPath external=true $item.connectLabel
   If condition=$empty
     Card variant=empty
       Icon name=Layers
