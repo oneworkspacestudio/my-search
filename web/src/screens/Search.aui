@@ -1,0 +1,57 @@
+Page Search
+  Heading level=1 "Find it in your Workspace"
+  Text "Search uses your own account in each app. Results are never collected with an administrator account."
+  Row
+    Input name=query action=search type=search placeholder="Search files, notes, events, people and tasks…"
+    Button action=search "Search"
+    Select name=sourceFilter options=$sourceOptions
+    Select name=kindFilter options=$kindOptions
+  Row
+    Field label="Modified from"
+      Input name=after type=date
+    Field label="Modified through"
+      Input name=before type=date
+    Field label="Tag (Tasks)"
+      Input name=tagFilter
+    Field label="Owner (when supplied by source)"
+      Input name=ownerFilter
+  Section id=search-summary
+  For each=$suggestions
+    Button variant=secondary item=$item.term action=suggestion $item.term
+  Row
+    Checkbox name=recent label="Remember my recent searches (off by default)"
+    Button variant=secondary action=preferences "Save preference"
+    Button variant=secondary action=clear "Clear recent searches"
+  For each=$recent
+    Button variant=secondary item=$item.term action=recent $item.term
+  If condition=$standalone
+    Alert "Open My Search through One Workspace to discover apps on the same origin. Standalone mode has no administrator crawler or default remote sources."
+  For each=$statuses
+    Row
+      Text $item.name
+      Badge tone=$item.tone $item.status
+      If condition=$item.connect
+        Link href=$item.path external=true "Open app to connect"
+  If condition=$empty
+    Card variant=empty
+      Icon name=Layers
+      Heading level=2 $emptyTitle
+      Text "My Vault is excluded. Mail bodies and Chat messages are not indexed or searched. Each source enforces its own permissions."
+  For each=$groups
+    Card
+      Row
+        Heading level=2 $item.name
+        Badge $item.count
+      For each=$item.results
+        Stack gap=xs
+          Link href=$item.href $item.title
+          Text variant=snippet $item.snippet
+          Text variant=caption $item.detail
+          Divider
+      If condition=$item.more
+        Button variant=secondary item=$item.id action=more "Load more from this source"
+  Card
+    Heading level=2 "Other installed apps"
+    Text variant=caption "These apps expose launch metadata only. Their private content is not searched. My Vault is always excluded."
+    For each=$unsupported
+      Link href=$item.href $item.name

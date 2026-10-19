@@ -1,0 +1,7 @@
+import type {Result} from './federation';
+export function distance(a:string,b:string){if(Math.abs(a.length-b.length)>1)return 2;let row=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const next=[i];for(let j=1;j<=b.length;j++)next[j]=Math.min(next[j-1]+1,row[j]+1,row[j-1]+Number(a[i-1]!==b[j-1]));row=next}return row[b.length]}
+export function nearTitle(title:string,q:string){return title.toLocaleLowerCase().split(/[^\p{L}\p{N}]+/u).some(w=>w.length>=4&&distance(w,q.toLocaleLowerCase())<=1)}
+export function matchesFilters(r:Result,f:Record<string,any>){if(f.kindFilter&&f.kindFilter!=='all'&&r.kind!==f.kindFilter)return false;if(f.after&&(!r.updated||r.updated.slice(0,10)<f.after))return false;if(f.before&&(!r.updated||r.updated.slice(0,10)>f.before))return false;if(f.tagFilter&&!(r.tags||[]).some(t=>t.toLocaleLowerCase()===f.tagFilter.trim().toLocaleLowerCase()))return false;if(f.ownerFilter&&(!r.owner||!r.owner.toLocaleLowerCase().includes(f.ownerFilter.trim().toLocaleLowerCase())))return false;return true}
+// Suggestions are derived exclusively from current authorised results and the
+// user's opt-in history, never a global dictionary of private document titles.
+export function suggestions(q:string,results:Result[],recent:string[]){q=q.trim().toLocaleLowerCase();if(q.length<2)return [];return [...new Set([...recent,...results.map(r=>r.title)])].filter(t=>t.toLocaleLowerCase()!==q&&(t.toLocaleLowerCase().includes(q)||nearTitle(t,q))).slice(0,6)}
