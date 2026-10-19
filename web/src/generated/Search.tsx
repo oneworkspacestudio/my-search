@@ -42,7 +42,7 @@ export function Search({ data, onAction }: { data: any; onAction: (name: string)
           <Text>{item.name}</Text>
           <Badge tone={item.tone}>{item.status}</Badge>
           {item.connect && (
-            <Link href={item.connectPath} external={true}>{item.connectLabel}</Link>
+            <Link href={item.connectPath}>{item.connectLabel}</Link>
           )}
         </Row>
       ))}

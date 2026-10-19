@@ -6,7 +6,7 @@
   "app": "search",
   "name": "My Search",
   "executable": "MySearch.exe",
-  "version": "0.1.0-preview.1",
+  "version": "0.1.0-preview.2",
   "route": "/search",
   "callback": "/search/auth/callback",
   "health": "/healthz",
