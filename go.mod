@@ -2,7 +2,7 @@ module github.com/oneworkspacestudio/my-search
 
 go 1.27.2
 
-require github.com/oneworkspacestudio/one-workspace v0.3.0-preview.36.0.20261018235801-c940d4319d21
+require github.com/oneworkspacestudio/one-workspace v0.3.0-preview.36.0.20261019010903-b1c1f801ccb2
 
 require (
 	github.com/coreos/go-oidc/v3 v3.21.0 // indirect
