@@ -19,17 +19,21 @@ export function Search({ data, onAction }: { data: any; onAction: (name: string)
         <Field label="Owner (when supplied by source)"><Input name="ownerFilter" /></Field>
       </Row>
       <Section id="search-summary" />
-      {data.suggestions.map((item, i) => (
-        <Button key={i} variant="secondary" item={item.term} onClick={() => onAction("suggestion")}>{item.term}</Button>
-      ))}
+      <Row>
+        {data.suggestions.map((item, i) => (
+          <Button key={i} variant="secondary" item={item.term} onClick={() => onAction("suggestion")}>{item.term}</Button>
+        ))}
+      </Row>
       <Row>
         <Checkbox name="recent" label="Remember my recent searches (off by default)" />
         <Button variant="secondary" onClick={() => onAction("preferences")}>Save preference</Button>
         <Button variant="secondary" onClick={() => onAction("clear")}>Clear recent searches</Button>
       </Row>
-      {data.recent.map((item, i) => (
-        <Button key={i} variant="secondary" item={item.term} onClick={() => onAction("recent")}>{item.term}</Button>
-      ))}
+      <Row>
+        {data.recent.map((item, i) => (
+          <Button key={i} variant="secondary" item={item.term} onClick={() => onAction("recent")}>{item.term}</Button>
+        ))}
+      </Row>
       {data.standalone && (
         <Alert>Open My Search through One Workspace to discover apps on the same origin. Standalone mode has no administrator crawler or default remote sources.</Alert>
       )}
@@ -57,7 +61,7 @@ export function Search({ data, onAction }: { data: any; onAction: (name: string)
           </Row>
           {item.results.map((item, i) => (
             <Stack key={i} gap="xs">
-              <Link href={item.href}>{item.title}</Link>
+              <Link variant="result" href={item.href}>{item.title}</Link>
               <Text variant="snippet">{item.snippet}</Text>
               <Text variant="caption">{item.detail}</Text>
               <Divider />

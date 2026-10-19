@@ -16,14 +16,16 @@ Page Search
     Field label="Owner (when supplied by source)"
       Input name=ownerFilter
   Section id=search-summary
-  For each=$suggestions
-    Button variant=secondary item=$item.term action=suggestion $item.term
+  Row
+    For each=$suggestions
+      Button variant=secondary item=$item.term action=suggestion $item.term
   Row
     Checkbox name=recent label="Remember my recent searches (off by default)"
     Button variant=secondary action=preferences "Save preference"
     Button variant=secondary action=clear "Clear recent searches"
-  For each=$recent
-    Button variant=secondary item=$item.term action=recent $item.term
+  Row
+    For each=$recent
+      Button variant=secondary item=$item.term action=recent $item.term
   If condition=$standalone
     Alert "Open My Search through One Workspace to discover apps on the same origin. Standalone mode has no administrator crawler or default remote sources."
   For each=$statuses
@@ -44,7 +46,7 @@ Page Search
         Badge $item.count
       For each=$item.results
         Stack gap=xs
-          Link href=$item.href $item.title
+          Link variant=result href=$item.href $item.title
           Text variant=snippet $item.snippet
           Text variant=caption $item.detail
           Divider
