@@ -25,6 +25,7 @@ func TestRecentSearchIsOptInScopedAndErased(t *testing.T) {
 	}
 	call := func(method, path, body string, cookie *http.Cookie, csrf string) *httptest.ResponseRecorder {
 		r := httptest.NewRequest(method, h.Config.Origin+path, bytes.NewBufferString(body))
+		r.RemoteAddr = "127.0.0.1:42500"
 		r.Header.Set("Origin", h.Config.Origin)
 		r.Header.Set("X-CSRF-Token", csrf)
 		if cookie != nil {
